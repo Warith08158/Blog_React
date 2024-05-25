@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import FormInput from "../../components/FormInput";
 import Google from "../../components/Google";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../components/Logo";
 import { auth } from "../../../Firebase";
 import {
@@ -15,14 +15,15 @@ const SignIn = () => {
   const passwordRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const navigate = useNavigate();
 
   const onSubmit = async (e) => {
     e.preventDefault();
     const userEmail = emailRef.current.value;
     const password = passwordRef.current.value;
 
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       const userCredential = await signInWithEmailAndPassword(
         auth,
         userEmail,
@@ -30,7 +31,7 @@ const SignIn = () => {
       );
 
       if (userCredential.user.emailVerified) {
-        console.log("email verified");
+        navigate("/protected-route/user-dashboard");
         setIsLoading(false);
         return;
       } else {

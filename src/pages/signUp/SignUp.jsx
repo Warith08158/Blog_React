@@ -46,9 +46,9 @@ const SignUp = () => {
       return setError("There was an error in the form. See requirements below");
     setError(false);
 
+    setCreatingAccount(true);
     //upload user details to firebase
     try {
-      setCreatingAccount(true);
       const user = await createUserWithEmailAndPassword(
         auth,
         userEmail,
@@ -143,7 +143,6 @@ const SignUp = () => {
                   Create an account
                 </button>
               )}
-
               <Google />
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}

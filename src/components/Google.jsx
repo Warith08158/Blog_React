@@ -1,19 +1,49 @@
-import React from "react";
-import { auth } from "../../Firebase";
+import React, { useState } from "react";
+import { auth, db } from "../../Firebase";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import Spinner from "./Spinner";
+import ErrorAlert from "./ErrorAlert";
 
 const Google = () => {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   const provider = new GoogleAuthProvider();
+
   const submitWithGoogle = async () => {
     try {
+      setIsLoading(true);
       const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      console.log(user);
+      const userId = result.user.uid;
+      const docRef = doc(db, "users", userId);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        navigate("/protected-route/user-dashboard");
+        setIsLoading(false);
+        return;
+      } else {
+        const data = {
+          name: result.user.displayName,
+          email: result.user.email,
+        };
+
+        await setDoc(doc(db, "users", userId), data);
+        navigate("/protected-route/user-dashboard");
+        setIsLoading(false);
+      }
     } catch (error) {
-      console.log(error.message);
+      setIsLoading(false);
+      setError(error.code.substring(5));
     }
   };
-  return (
+  return isLoading ? (
+    <div className="fixed inset-0 flex items-center justify-center">
+      <Spinner />
+    </div>
+  ) : (
     <button
       type="button"
       className="text-gray-900 bg-white w-full justify-center hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 me-2 mb-2"
@@ -33,6 +63,11 @@ const Google = () => {
         />
       </svg>
       Continue with Google
+      {error && (
+        <div className="fixed right-0 top-0 md:right-4 md:top-4">
+          <ErrorAlert text={error} setError={setError} />
+        </div>
+      )}
     </button>
   );
 };

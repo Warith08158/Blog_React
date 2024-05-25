@@ -3,15 +3,52 @@ import ErrorAlert from "../../components/ErrorAlert";
 import { Link } from "react-router-dom";
 import FormInput from "../../components/FormInput";
 import Logo from "../../components/Logo";
+import { auth, db } from "../../../Firebase";
+import { sendPasswordResetEmail } from "firebase/auth";
+import SucessAlert from "../../components/SucessAlert";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 const ForgetPassword = () => {
   const emailRef = useRef();
   const [retrieving, setRetrieving] = useState(false);
+  const [sucess, setSucess] = useState(false);
   const [error, setError] = useState(false);
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    const email = emailRef.current.value;
+    console.log(email);
+    setRetrieving(true);
+
+    const q = query(collection(db, "users"), where("email", "==", email));
+    try {
+      const querySnapshot = await getDocs(q);
+
+      const matchEmail = [];
+      querySnapshot.forEach((doc) => {
+        matchEmail.push({
+          id: doc.id,
+          name: doc.data().name,
+          email: doc.data().email,
+        });
+      });
+
+      if (matchEmail.length > 0) {
+        await sendPasswordResetEmail(auth, email);
+        setRetrieving(false);
+        emailRef.current.value = "";
+        setSucess("Link Has been sent");
+        return;
+      } else {
+        setRetrieving(false);
+        setError("Could not find your account");
+      }
+    } catch (error) {
+      setRetrieving(false);
+      setError(error.code.substring(5));
+    }
   };
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900 h-screen min-h-[550px] flex items-center justify-center">
       <div className="flex flex-col items-center justify-center px-6 mx-auto w-full">
@@ -58,14 +95,14 @@ const ForgetPassword = () => {
                       fill="currentColor"
                     />
                   </svg>
-                  Signing in...
+                  Retrieving...
                 </button>
               ) : (
                 <button
                   type="submit"
                   className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                 >
-                  Login
+                  Retrieve
                 </button>
               )}
               <div>
@@ -93,6 +130,11 @@ const ForgetPassword = () => {
             </form>
           </div>
         </div>
+        {sucess && (
+          <div className="fixed right-0 top-0 md:right-4 md:top-4">
+            <SucessAlert text={sucess} setSucess={setSucess} />
+          </div>
+        )}
         {error && (
           <div className="fixed right-0 top-0 md:right-4 md:top-4">
             <ErrorAlert text={error} setError={setError} />
