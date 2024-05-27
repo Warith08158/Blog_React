@@ -5,10 +5,6 @@ const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const hamburgerClick = () => {
-    setOpenMenu(true);
-  };
-
   const handleImageLoad = () => {
     setLoading(false);
   };
@@ -23,7 +19,7 @@ const Navbar = () => {
               aria-controls="logo-sidebar"
               type="button"
               className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              onClick={hamburgerClick}
+              onClick={() => setOpenMenu((prev) => !prev)}
             >
               <span className="sr-only">Open sidebar</span>
               <svg
@@ -71,45 +67,47 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="sm:hidden" id="navbar-hamburger">
-        <div className="px-3 py-3 lg:px-5 lg:pl-3 max-w-[1280px] mx-auto">
-          <ul className="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-            <li>
-              <a
-                href="#"
-                className="block py-2 px-3 rounded dark:bg-blue-600 text-white bg-primary-600 hover:bg-primary-700"
-                aria-current="page"
-              >
-                Home
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              >
-                Services
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white"
-              >
-                Pricing
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              >
-                Contact
-              </a>
-            </li>
-          </ul>
+      {openMenu && (
+        <div className="sm:hidden sticky top-0" id="navbar-hamburger">
+          <div className="px-3 py-3 lg:px-5 lg:pl-3 max-w-[1280px] mx-auto">
+            <ul className="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+              <li>
+                <a
+                  href="#"
+                  className="block py-2 px-3 rounded dark:bg-blue-600 text-white bg-primary-600 hover:bg-primary-700"
+                  aria-current="page"
+                >
+                  Home
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                >
+                  Services
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+                >
+                  Pricing
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                >
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
+      )}
     </nav>
   );
 };
