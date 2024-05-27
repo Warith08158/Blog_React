@@ -5,7 +5,7 @@ import ErrorAlert from "./ErrorAlert";
 import Logo from "./Logo";
 import ConfirmAccount from "../pages/confirmAccount/ConfirmAccount";
 import Navbar from "./Navbar";
-import Sidebar from "./Sidebar";
+import Menu from "./Menu";
 
 export {
   FormInput,
@@ -15,5 +15,5 @@ export {
   Logo,
   ConfirmAccount,
   Navbar,
-  Sidebar,
+  Menu,
 };

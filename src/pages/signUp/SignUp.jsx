@@ -5,13 +5,15 @@ import {
   Google,
   Logo,
 } from "../../components/component";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { auth, db } from "../../../Firebase";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { v4 as uuidv4 } from "uuid";
+import useUserStatus from "../../Hooks/useUserStatus";
 
 const SignUp = () => {
   const [error, setError] = useState(false);
@@ -21,6 +23,7 @@ const SignUp = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const confirmPasswordRef = useRef(null);
+  const userIsLoggedin = useUserStatus().userIsVerified;
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -28,11 +31,6 @@ const SignUp = () => {
     const userEmail = emailRef.current.value;
     const password = passwordRef.current.value;
     const confirmPassword = confirmPasswordRef.current.value;
-
-    const data = {
-      name: userName,
-      email: userEmail,
-    };
 
     if (
       userName.length < 10 ||
@@ -54,6 +52,13 @@ const SignUp = () => {
         userEmail,
         password
       );
+
+      const data = {
+        name: userName,
+        email: userEmail,
+        createdAt: serverTimestamp(),
+      };
+
       await setDoc(doc(db, "users", user.user.uid), data);
       await sendEmailVerification(auth.currentUser);
       setCreatingAccount(false);

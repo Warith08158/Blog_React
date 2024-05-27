@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { auth, db } from "../../Firebase";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import Spinner from "./Spinner";
 import ErrorAlert from "./ErrorAlert";
 
@@ -28,6 +29,7 @@ const Google = () => {
         const data = {
           name: result.user.displayName,
           email: result.user.email,
+          createdAt: serverTimestamp(),
         };
 
         await setDoc(doc(db, "users", userId), data);
@@ -36,11 +38,12 @@ const Google = () => {
       }
     } catch (error) {
       setIsLoading(false);
+      console.log(error);
       setError(error.code.substring(5));
     }
   };
   return isLoading ? (
-    <div className="fixed top-0 bottom-0 right-0 left-0 z-40 flex items-center justify-center bg-white/30">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/30">
       <Spinner />
     </div>
   ) : (

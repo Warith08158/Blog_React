@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Logo from "./Logo";
 import { Link, useLocation } from "react-router-dom";
+import Menu from "./Menu";
 
 const links = [
   {
@@ -57,7 +58,7 @@ const Navbar = () => {
     setLoading(false);
   };
   return (
-    <nav className="sticky top-0 z-40 w-full bg-gray-50 border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 mx-auto">
+    <nav className="sticky z-40 top-0 w-full bg-gray-50 border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 mx-auto">
       <div className="px-3 py-3 lg:px-5 lg:pl-3 max-w-[1280px] mx-auto">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-start rtl:justify-end">
@@ -116,27 +117,9 @@ const Navbar = () => {
       </div>
 
       {openMenu && (
-        <div className="sm:hidden sticky top-0" id="navbar-hamburger">
-          <div className="px-3 py-3 lg:px-5 lg:pl-3 max-w-[1280px] mx-auto">
-            <ul className="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-              {links.map((link) => (
-                <li onClick={() => setOpenMenu(false)} key={link.to}>
-                  <Link
-                    onClick={() => setOpenMenu(false)}
-                    to={link.path}
-                    href="#"
-                    className={`${
-                      location === link.path
-                        ? "bg-primary-600 text-white "
-                        : "hover:bg-gray-100 text-gray-900"
-                    } block py-2 px-3 rounded`}
-                    aria-current="page"
-                  >
-                    {link.to}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+        <div className="sm:hidden" id="Menu">
+          <div className="max-w-[1280px] mx-auto">
+            <Menu />
           </div>
         </div>
       )}

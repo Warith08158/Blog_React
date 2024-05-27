@@ -1,18 +1,20 @@
 import React, { useRef, useState } from "react";
 import ErrorAlert from "../../components/ErrorAlert";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import FormInput from "../../components/FormInput";
 import Logo from "../../components/Logo";
 import { auth, db } from "../../../Firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
 import SucessAlert from "../../components/SucessAlert";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import useUserStatus from "../../Hooks/useUserStatus";
 
 const ForgetPassword = () => {
   const emailRef = useRef();
   const [retrieving, setRetrieving] = useState(false);
   const [sucess, setSucess] = useState(false);
   const [error, setError] = useState(false);
+  const userIsLoggedin = useUserStatus().userIsVerified;
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -49,7 +51,9 @@ const ForgetPassword = () => {
     }
   };
 
-  return (
+  return userIsLoggedin ? (
+    <Navigate to="/" />
+  ) : (
     <section className="dark:bg-gray-900 flex justify-center w-full">
       <div className="flex flex-col items-center justify-center px-6 mx-auto w-full mt-4">
         <div className="flex items-start mb-6 sm:hidden">

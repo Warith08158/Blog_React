@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import FormInput from "../../components/FormInput";
 import Google from "../../components/Google";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Logo from "../../components/Logo";
 import { auth } from "../../../Firebase";
 import {
@@ -9,6 +9,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import ErrorAlert from "../../components/ErrorAlert";
+import useUserStatus from "../../Hooks/useUserStatus";
 
 const SignIn = () => {
   const emailRef = useRef(null);
@@ -16,6 +17,7 @@ const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+  const userIsLoggedin = useUserStatus().userIsVerified;
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -44,6 +46,7 @@ const SignIn = () => {
       setError(error.code.substring(5));
     }
   };
+
   return (
     <section className="dark:bg-gray-900 flex justify-center w-full">
       <div className="flex flex-col items-center justify-center px-6 mx-auto w-full mt-4">
