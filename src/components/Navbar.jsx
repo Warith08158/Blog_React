@@ -13,7 +13,7 @@ const Navbar = () => {
     setLoading(false);
   };
   return (
-    <nav className="sticky top-0 z-40 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 mx-auto">
+    <nav className="sticky top-0 z-40 w-full bg-gray-50 border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 mx-auto">
       <div className="px-3 py-3 lg:px-5 lg:pl-3 max-w-[1280px] mx-auto">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-start rtl:justify-end">
@@ -68,6 +68,46 @@ const Navbar = () => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="sm:hidden" id="navbar-hamburger">
+        <div className="px-3 py-3 lg:px-5 lg:pl-3 max-w-[1280px] mx-auto">
+          <ul className="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+            <li>
+              <a
+                href="#"
+                className="block py-2 px-3 rounded dark:bg-blue-600 text-white bg-primary-600 hover:bg-primary-700"
+                aria-current="page"
+              >
+                Home
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              >
+                Services
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+              >
+                Pricing
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              >
+                Contact
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
