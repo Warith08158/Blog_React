@@ -66,8 +66,8 @@ const SignUp = () => {
 
   return (
     <section className="flex flex-col justify-center w-full">
-      <div className="flex flex-col items-center justify-center px-6 mx-auto w-full mt-20">
-        <div className="flex items-center mt-6 mb-6 sm:hidden">
+      <div className="flex flex-col items-center justify-center px-6 mx-auto w-full mt-4">
+        <div className="flex items-center mb-6 sm:hidden">
           <Logo />
         </div>
 

@@ -142,8 +142,9 @@ const Sidebar = () => {
   return (
     <aside
       id="logo-sidebar"
-      className="hidden sm:block sm:sticky top-0 left-0 z-10 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700 h-screen pt-20 pr-6"
+      className="hidden sm:block sm:sticky top-0 left-0 z-10 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700 w-42 md:w-64"
       aria-label="Sidebar"
+      style={{ height: "calc(100vh - 61px" }}
     >
       <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
         <ul className="space-y-2 font-medium">

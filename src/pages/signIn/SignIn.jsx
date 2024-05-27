@@ -46,8 +46,8 @@ const SignIn = () => {
   };
   return (
     <section className="dark:bg-gray-900 flex justify-center w-full">
-      <div className="flex flex-col items-center justify-center px-6 mx-auto w-full mt-20">
-        <div className="flex items-start mt-6 mb-6 sm:hidden">
+      <div className="flex flex-col items-center justify-center px-6 mx-auto w-full mt-4">
+        <div className="flex items-start mb-6 sm:hidden">
           <Logo />
         </div>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">

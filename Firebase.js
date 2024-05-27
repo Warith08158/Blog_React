@@ -7,12 +7,18 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: import.meta.env.REACT_APP_API_KEY,
-  authDomain: import.meta.env.REACT_APP_AUTH_DOMAIN,
-  projectId: import.meta.env.REACT_APP_PROJECT_ID,
-  storageBucket: import.meta.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.REACT_APP_MESSAGING_SENDER_ID,
-  appId: import.meta.env.REACT_APP_APP_ID,
+  apiKey: "AIzaSyCtKlKBwCnj_fORFY0s5t2OCzId7sdSls4",
+  // import.meta.env.REACT_APP_API_KEY
+  authDomain: "blog-react-2e253.firebaseapp.com",
+  // import.meta.env.REACT_APP_AUTH_DOMAIN
+  projectId: "blog-react-2e253",
+  // import.meta.env.REACT_APP_PROJECT_ID
+  storageBucket: "blog-react-2e253.appspot.com",
+  // import.meta.env.REACT_APP_STORAGE_BUCKET
+  messagingSenderId: "1091238634977",
+  // import.meta.env.REACT_APP_MESSAGING_SENDER_ID
+  appId: "1:1091238634977:web:bca4df4cc82a3e18c51ea0",
+  // import.meta.env.REACT_APP_APP_ID
 };
 
 // Initialize Firebase
