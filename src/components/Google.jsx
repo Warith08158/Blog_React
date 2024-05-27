@@ -40,7 +40,7 @@ const Google = () => {
     }
   };
   return isLoading ? (
-    <div className="fixed inset-0 flex items-center justify-center">
+    <div className="fixed top-0 bottom-0 right-0 left-0 z-40 flex items-center justify-center bg-white/30">
       <Spinner />
     </div>
   ) : (
@@ -64,7 +64,7 @@ const Google = () => {
       </svg>
       Continue with Google
       {error && (
-        <div className="fixed right-0 top-0 md:right-4 md:top-4">
+        <div className="fixed right-0 top-20 md:right-4">
           <ErrorAlert text={error} setError={setError} />
         </div>
       )}

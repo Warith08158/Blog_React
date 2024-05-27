@@ -4,7 +4,7 @@ import { Link, Navigate } from "react-router-dom";
 
 const ConfirmAccount = () => {
   return auth.currentUser ? (
-    <div className="fixed inset-0 flex items-center justify-center">
+    <div className="flex items-center justify-center mt-48 sm:mt-56 md:mt-64 lg:mt-72">
       <div>
         <h3 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl text-center dark:text-white">
           Please Check Your Mail For Verification

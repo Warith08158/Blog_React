@@ -65,9 +65,12 @@ const SignUp = () => {
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 h-screen min-h-[900px] flex flex-col items-stretch justify-center">
-      <div className="flex flex-col items-center justify-center px-6 mx-auto mt-6 w-full">
-        <Logo />
+    <section className="flex flex-col justify-center w-full">
+      <div className="flex flex-col items-center justify-center px-6 mx-auto w-full mt-20">
+        <div className="flex items-center mt-6 mb-6 sm:hidden">
+          <Logo />
+        </div>
+
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
@@ -158,7 +161,7 @@ const SignUp = () => {
         </div>
       </div>
       <div
-        className="flex p-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 mt-6"
+        className=" flex p-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 mt-6"
         role="alert"
       >
         <svg
@@ -183,7 +186,7 @@ const SignUp = () => {
           </ul>
         </div>
         {error && (
-          <div className="fixed right-0 top-0 md:right-4 md:top-4">
+          <div className="fixed right-0 top-20 md:right-4">
             <ErrorAlert text={error} setError={setError} />
           </div>
         )}
