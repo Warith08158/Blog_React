@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Profile from "../../components/Profile";
 import Posts from "../../components/Posts";
 import Blog from "../../components/Blog";
+import { LuDot } from "react-icons/lu";
+import UserImages from "../../components/UserImages";
 
 const Management = [
   {
@@ -59,59 +61,22 @@ const Management = [
 
 const UserDashboard = () => {
   const [currentManagement, setCurrrentManagement] = useState("Profile");
+
   return (
     <section className="px-3 sm:px-10 py-3">
       <h4 className="text-2xl font-bold racking-wide text-gray-950 dark:text-white">
         Profile Information
       </h4>
-      <div className="mt-2 flex items-center gap-5">
+      <div className="mt-2 flex items-center gap-3 flex-wrap">
         <p className="text-gray-400 dark:text-gray-400">Dashboard</p>
+        <LuDot />
         <p className="text-gray-400 dark:text-gray-400">User</p>
+        <LuDot />
         <p className="text-gray-700 dark:text-gray-400 font-semibold">
           Milan Jack
         </p>
       </div>
-
-      <figure className="mt-10 sm:mt-12 relative">
-        <img
-          className="object-cover w-full max-w-full rounded-lg h-[350px]"
-          src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-          alt="image description"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r rounded-lg from-black via-transparent/70 to-black opacity-90"></div>
-        <div className="absolute top-6 left-0 right-0 flex items-center flex-col gap-6 justify-center">
-          <div className="relative border-2 border-white rounded-full">
-            <img
-              className="w-28 h-28 rounded-full"
-              src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-              alt=""
-            />
-          </div>
-          <div className="flex items-center flex-col gap-2">
-            <p className="text-white dark:text-gray-400 font-semibold text-xl tracking-wider">
-              Milan Jack
-            </p>
-            <p className="text-white dark:text-gray-400 text-md tracking-wide">
-              UI/UX Designer
-            </p>
-            <div className="flex items-center gap-8 lg:gap-12 mt-6">
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-2xl font-semibold tracking-wider text-white">
-                  20
-                </p>
-                <p className="text-gray-100 tracking-wider text-sm">Posts</p>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-2xl font-semibold tracking-wider text-white">
-                  300
-                </p>
-                <p className="text-gray-100 tracking-wider text-sm">Comments</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </figure>
-
+      <UserImages />
       <div className="py-4 text-gray-500 list-none list-inside mb-6">
         <ul className="flex gap-10 flex-wrap">
           {Management.map((manage) => (

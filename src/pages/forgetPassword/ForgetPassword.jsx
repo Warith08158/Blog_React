@@ -19,7 +19,6 @@ const ForgetPassword = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
-    console.log(email);
     setRetrieving(true);
 
     const q = query(collection(db, "users"), where("email", "==", email));
@@ -51,9 +50,7 @@ const ForgetPassword = () => {
     }
   };
 
-  return userIsLoggedin ? (
-    <Navigate to="/" />
-  ) : (
+  return (
     <section className="dark:bg-gray-900 flex justify-center w-full">
       <div className="flex flex-col items-center justify-center px-6 mx-auto w-full mt-4">
         <div className="flex items-start mb-6 sm:hidden">

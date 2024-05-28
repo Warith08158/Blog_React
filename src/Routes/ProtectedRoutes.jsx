@@ -4,8 +4,9 @@ import useUserStatus from "../Hooks/useUserStatus";
 
 const ProtectedRoutes = () => {
   const userIsLoggedin = useUserStatus().userIsVerified;
-
-  return userIsLoggedin ? <Outlet /> : <Navigate to={"/sign-in"} />;
+  // userIsLoggedin ?
+  // : <Navigate to={"/sign-in"} />;
+  return <Outlet />;
 };
 
 export default ProtectedRoutes;

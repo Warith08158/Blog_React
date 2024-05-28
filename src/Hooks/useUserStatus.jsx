@@ -3,12 +3,12 @@ import { auth } from "../../Firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 const useUserStatus = () => {
-  const [userIsVerified, setUserIsVerified] = useState(true);
+  const [userIsVerified, setUserIsVerified] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user && user.emailVerified) {
-        setUserIsVerified(true);
+        setUserIsVerified(user);
         return;
       } else {
         setUserIsVerified(false);

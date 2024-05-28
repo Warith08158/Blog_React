@@ -20,7 +20,7 @@ const UserDashBoardTextArea = () => {
           <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
             <button
               type="submit"
-              className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
+              className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-600 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
             >
               Save Changes
             </button>
@@ -44,10 +44,6 @@ const UserDashBoardTextArea = () => {
           </div>
         </div>
       </form>
-      <p className="ms-auto text-xs text-gray-500 dark:text-gray-400">
-        You are allowed to select two images. The first one will be used as the
-        cover photo .
-      </p>
     </div>
   );
 };
