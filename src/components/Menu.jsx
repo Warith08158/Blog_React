@@ -9,9 +9,9 @@ const Menu = () => {
     <aside
       id="logo-sidebar"
       aria-label="Sidebar"
-      className="sm:border-r sm:border-gray-200 sm:sticky sm:top-0 sm:left-0 sm:w-64 sm:h-screen sm:transition-transform sm:translate-x-0"
+      className="sm:border-r sm:border-gray-200 sm:sticky sm:top-0 sm:pt-20 sm:left-0 sm:w-44 md:w-64 sm:h-screen sm:transition-transform sm:translate-x-0"
     >
-      <div className="sm:h-full px-3 pb-4 sm:bg-white dark:bg-gray-800">
+      <div className="sm:h-full px-3 pb-4 sm:bg-white dark:bg-gray-800 sm:overflow-y-auto">
         <ul className="space-y-2 font-medium">
           <li>
             <Link
