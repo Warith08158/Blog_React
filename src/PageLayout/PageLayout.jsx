@@ -10,7 +10,7 @@ const PageLayout = () => {
         <div className="hidden sm:block">
           <Menu />
         </div>
-        <div className="flex-1 mt-20">
+        <div className="flex-1 bg-white pt-20">
           <Outlet />
         </div>
       </div>

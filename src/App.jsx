@@ -3,7 +3,7 @@ import RoutePages from "./Routes/RoutePages";
 
 const App = () => {
   return (
-    <div>
+    <div className="bg-gray-50">
       <RoutePages />
     </div>
   );

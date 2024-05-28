@@ -1,17 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useUserStatus from "../Hooks/useUserStatus";
 import SignOut from "./SignOut";
 
 const Menu = () => {
   const userIsLoggedIn = useUserStatus().userIsVerified;
+  const [openMenu, setOpenMenu] = useState(false);
+
   return (
     <aside
       id="logo-sidebar"
       aria-label="Sidebar"
-      className="sm:border-r sm:border-gray-200 sm:sticky sm:top-0 sm:pt-20 sm:left-0 sm:w-44 md:w-64 sm:h-screen sm:transition-transform sm:translate-x-0"
+      className="sm:border-r bg-gray-50 sm:border-gray-200 sm:sticky sm:top-0 sm:pt-20 sm:left-0 sm:w-48 lg:w-64 sm:h-screen sm:transition-transform sm:translate-x-0"
     >
-      <div className="sm:h-full px-3 pb-4 sm:bg-white dark:bg-gray-800 sm:overflow-y-auto">
+      <div className="sm:h-full px-3 pb-4 dark:bg-gray-800 sm:overflow-y-auto">
         <ul className="space-y-2 font-medium">
           <li>
             <Link
@@ -37,7 +39,7 @@ const Menu = () => {
               className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             >
               <svg
-                className="w-6 h-6 text-gray-800 dark:text-white"
+                className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -81,15 +83,17 @@ const Menu = () => {
               className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             >
               <svg
-                className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
-                <path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
+                <path d="M15.133 10.632v-1.8a5.407 5.407 0 0 0-4.154-5.262.955.955 0 0 0 .021-.106V1.1a1 1 0 0 0-2 0v2.364a.944.944 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C4.867 13.018 3 13.614 3 14.807 3 15.4 3 16 3.538 16h12.924C17 16 17 15.4 17 14.807c0-1.193-1.867-1.789-1.867-4.175Zm-13.267-.8a1 1 0 0 1-1-1 9.424 9.424 0 0 1 2.517-6.39A1.001 1.001 0 1 1 4.854 3.8a7.431 7.431 0 0 0-1.988 5.037 1 1 0 0 1-1 .995Zm16.268 0a1 1 0 0 1-1-1A7.431 7.431 0 0 0 15.146 3.8a1 1 0 0 1 1.471-1.354 9.425 9.425 0 0 1 2.517 6.391 1 1 0 0 1-1 .995ZM6.823 17a3.453 3.453 0 0 0 6.354 0H6.823Z" />
               </svg>
-              <span className="flex-1 ms-3 whitespace-nowrap">Inbox</span>
+              <span className="flex-1 ms-3 whitespace-nowrap">
+                Notification
+              </span>
               <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
                 3
               </span>
