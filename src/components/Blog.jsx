@@ -1,4 +1,5 @@
 import React from "react";
+import DashboardInput from "./DashboardInput";
 
 const Blog = () => {
   return (
@@ -11,61 +12,52 @@ const Blog = () => {
           <div>
             <label
               htmlFor="blog-title"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block text-sm font-medium text-gray-900 dark:text-white"
             >
               Title
             </label>
             <input
               type="text"
               id="blog-title"
-              className="block w-full p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="block w-full p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+              placeholder="Title of blog"
             />
           </div>
-          <div>
-            <label
-              htmlFor="blog-category"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Category
-            </label>
-            <input
-              type="text"
-              id="blog-Category"
-              className="block w-full p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="blog-subCategory"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Subcategory
-            </label>
-            <input
-              type="text"
-              id="blog-subCategory"
-              className="block w-full p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            />
-          </div>
+
+          <DashboardInput
+            htmlFor={"blog-category"}
+            title={"Category"}
+            id={"blog-Category"}
+          />
+
+          <DashboardInput
+            htmlFor={"blog-subCategory"}
+            title={"Subcategory"}
+            id={"blog-subCategory"}
+          />
         </div>
 
-        <div>
+        <p className="ms-auto text-xs text-gray-500 dark:text-gray-400 mt-3">
+          Selecting Categories and Subcategories that fit your blog will help
+          users to find blogs easily.
+        </p>
+        <div className="mt-6">
           <label
             htmlFor="message"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            Your message
+            Your Blog
           </label>
           <textarea
             id="message"
             rows="4"
-            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
             placeholder="Leave a comment..."
           ></textarea>
         </div>
         <div className="flex items-center justify-center w-full mt-6">
           <label
-            for="dropzone-file"
+            htmlFor="dropzone-file"
             className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -78,9 +70,9 @@ const Blog = () => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
                 />
               </svg>
@@ -92,7 +84,7 @@ const Blog = () => {
                 SVG, PNG, JPG or GIF (MAX. 800x400px)
               </p>
             </div>
-            <input id="dropzone-file" type="file" class="hidden" />
+            <input id="dropzone-file" type="file" className="hidden" />
           </label>
         </div>
 

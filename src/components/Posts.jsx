@@ -76,7 +76,7 @@ const Posts = () => {
             alt="image description"
           />
           <form className="flex items-center w-full">
-            <label for="simple-search" className="sr-only">
+            <label htmlFor="simple-search" className="sr-only">
               Search
             </label>
             <div className="relative w-full flex gap-3">

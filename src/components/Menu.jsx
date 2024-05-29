@@ -19,7 +19,7 @@ const Menu = () => {
             className={`${
               location === "/protected-route/user-dashboard"
                 ? "bg-gray-200 text-gray-900"
-                : "bg-gray-100 text-gray-800"
+                : "bg-transparent text-gray-800"
             } rounded-md`}
           >
             <Link
