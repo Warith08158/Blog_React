@@ -12,9 +12,12 @@ const Posts = () => {
       </h5>
       <div className="bg-white border border-gray-200 shadow rounded-lg dark:bg-gray-800 dark:border-gray-700 py-4">
         <div className="px-4">
-          <div className="mb-4">
+          <div className="mb-4 space-x-3 flex-wrap">
             <p className="px-3 rounded-lg bg-primary-100 text-gray-600 inline">
               #Programming
+            </p>
+            <p className="px-3 rounded-lg bg-red-100 text-gray-600 inline">
+              #Web development
             </p>
           </div>
           <div className="pb-2 flex flex-row justify-between gap-3 items-center flex-wrap">

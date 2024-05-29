@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import useUserStatus from "../Hooks/useUserStatus";
 import SignOut from "./SignOut";
 
-const Menu = () => {
+const Menu = ({ openMenu, setOpenMenu }) => {
   const location = useLocation().pathname;
   const userIsLoggedIn = useUserStatus().userIsVerified;
 
@@ -11,7 +11,7 @@ const Menu = () => {
     <aside
       id="logo-sidebar"
       aria-label="Sidebar"
-      className="sm:border-r bg-gray-50 sm:border-gray-200 sm:sticky sm:top-0 sm:pt-20 sm:left-0 sm:w-48 lg:w-64 sm:h-screen sm:transition-transform sm:translate-x-0"
+      className={` sm:border-r bg-gray-50 sm:border-gray-200 sm:sticky sm:top-0 sm:pt-20 sm:left-0 sm:w-48 lg:w-64 sm:h-screen sm:transition-transform sm:translate-x-0`}
     >
       <div className="sm:h-full px-3 pb-4 dark:bg-gray-800 sm:overflow-y-auto">
         <ul className="space-y-2 font-medium">
@@ -25,6 +25,7 @@ const Menu = () => {
             <Link
               to="/protected-route/user-dashboard"
               className={`flex items-center p-2 rounded-lg group `}
+              onClick={() => (openMenu ? setOpenMenu(false) : null)}
             >
               <svg
                 className="w-5 h-5 text-gray-500 transition duration-75"
@@ -43,6 +44,7 @@ const Menu = () => {
             <Link
               to="/"
               className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`}
+              onClick={() => (openMenu ? setOpenMenu(false) : null)}
             >
               <svg
                 className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -67,6 +69,7 @@ const Menu = () => {
             <Link
               to="#"
               className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`}
+              onClick={() => (openMenu ? setOpenMenu(false) : null)}
             >
               <svg
                 className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -89,6 +92,7 @@ const Menu = () => {
             <Link
               to="#"
               className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`}
+              onClick={() => (openMenu ? setOpenMenu(false) : null)}
             >
               <svg
                 className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -108,6 +112,7 @@ const Menu = () => {
               <Link
                 to="/sign-in"
                 className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`}
+                onClick={() => (openMenu ? setOpenMenu(false) : null)}
               >
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -133,6 +138,7 @@ const Menu = () => {
               <Link
                 to="/sign-up"
                 className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`}
+                onClick={() => (openMenu ? setOpenMenu(false) : null)}
               >
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -150,7 +156,7 @@ const Menu = () => {
             </li>
           )}
           <li>
-            <SignOut />
+            <SignOut openMenu={openMenu} setOpenMenu={setOpenMenu} />
           </li>
         </ul>
       </div>

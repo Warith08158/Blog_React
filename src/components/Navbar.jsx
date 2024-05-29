@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "./Logo";
 import Menu from "./Menu";
 import { Link } from "react-router-dom";
@@ -11,9 +11,22 @@ const Navbar = () => {
     setLoading(false);
   };
 
-  const hamburgerClick = () => {
+  const hamburgerClick = (event) => {
+    event.stopPropagation();
     setOpenMenu((prev) => !prev);
   };
+
+  useEffect(() => {
+    const handleClick = () => {
+      setOpenMenu(false);
+    };
+
+    document.addEventListener("click", handleClick);
+
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, []);
 
   return (
     <nav className="fixed z-30 top-0 w-full bg-gray-50 border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -101,7 +114,7 @@ const Navbar = () => {
         <div className="sm:hidden" id="Menu">
           <div className="max-w-[1280px] mx-auto">
             <div>
-              <Menu />
+              <Menu openMenu={openMenu} setOpenMenu={setOpenMenu} />
             </div>
           </div>
         </div>

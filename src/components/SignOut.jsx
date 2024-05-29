@@ -4,11 +4,12 @@ import { auth } from "../../Firebase";
 import useUserStatus from "../Hooks/useUserStatus";
 import Modal from "./Modal";
 
-const SignOut = () => {
+const SignOut = ({ openMenu, setOpenMenu }) => {
   const userIsLoggedin = useUserStatus().userIsVerified;
   const [userSignOut, setUserSignOut] = useState(false);
 
   const signUserOut = async () => {
+    openMenu ? setOpenMenu(false) : null;
     setUserSignOut(true);
     // try {
     //   await signOut(auth);
@@ -41,7 +42,6 @@ const SignOut = () => {
         </svg>
         <span className="flex-1 ms-3 whitespace-nowrap">Sign Out</span>
       </button>
-      {/* {userSignOut && <Modal />} */}
     </div>
   ) : null;
 };
