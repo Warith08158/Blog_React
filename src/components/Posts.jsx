@@ -10,7 +10,7 @@ const Posts = () => {
       <h5 className="text-lg font-semibold text-gray-950 dark:text-white mt-3 mb-4">
         Manage Posts
       </h5>
-      <div className="bg-white border border-gray-200 shadow rounded-lg dark:bg-gray-800 dark:border-gray-700 py-4">
+      <div className="border border-gray-200 shadow rounded-lg dark:bg-gray-800 dark:border-gray-700 py-4 bg-gray-50">
         <div className="px-4">
           <div className="mb-4 space-x-3 flex-wrap">
             <p className="px-3 rounded-lg bg-primary-100 text-gray-600 inline">
@@ -53,22 +53,28 @@ const Posts = () => {
         </div>
 
         <img
-          className="object-contain w-full max-w-full h-auto max-h-[500px] bg-black"
+          className="object-contain w-full max-w-full h-auto max-h-[450px] bg-black"
           src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
           alt="image description"
         />
 
-        <div className="px-4">
-          <div className="w-full border-b border-gray-300 py-2 flex items-center justify-between">
+        <div className="px-4 bg-gray-100">
+          <div className="w-full border-b border-gray-300 py-3 flex items-center justify-between">
             <div>32 Reactions</div>
             <div>10 comments</div>
           </div>
         </div>
         <div className="px-4">
-          <div className="w-full border-b border-gray-300 py-2 flex items-center justify-between px-12 lg:px-32">
-            <AiFillLike className="text-2xl" />
-            <AiFillDislike className="text-2xl" />
-            <FaCommentAlt className="text-xl" />
+          <div className="w-full border-b border-gray-300 py-2 flex items-center justify-center gap-4 md:gap-6 lg:gap-8 flex-wrap">
+            <button className=" bg-gray-100 py-2.5 rounded-xl flex-1 flex items-center justify-center">
+              <AiFillLike className="text-2xl text-blue-800" />
+            </button>
+            <button className=" bg-gray-100 py-2.5 rounded-xl flex-1 flex items-center justify-center">
+              <AiFillDislike className="text-2xl text-[#CD5C5C]" />
+            </button>
+            <button className=" bg-gray-100 py-2.5 rounded-xl flex-1 flex items-center justify-center">
+              <FaCommentAlt className="text-xl text-[#708090]" />
+            </button>
           </div>
         </div>
 
