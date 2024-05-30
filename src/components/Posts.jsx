@@ -1,8 +1,10 @@
 import { MdEdit } from "react-icons/md";
-import { AiFillLike } from "react-icons/ai";
-import { AiFillDislike } from "react-icons/ai";
-import { FaCommentAlt } from "react-icons/fa";
+import { AiOutlineLike } from "react-icons/ai";
+import { GrDislike } from "react-icons/gr";
 import { CiClock1 } from "react-icons/ci";
+import { GoComment } from "react-icons/go";
+import { FcLike } from "react-icons/fc";
+import { AiFillDislike } from "react-icons/ai";
 
 const Posts = () => {
   return (
@@ -59,21 +61,34 @@ const Posts = () => {
         />
 
         <div className="px-4 bg-gray-100">
-          <div className="w-full border-b border-gray-300 py-3 flex items-center justify-between">
-            <div>32 Reactions</div>
-            <div>10 comments</div>
+          <div className="w-full border-b border-gray-300 py-3 flex items-center justify-start gap-3">
+            <div className="flex items-center gap-0">
+              <FcLike className="text-xl" />
+              <AiFillDislike className="text-xl" />
+            </div>
+            <span className="text-base text-gray-600 font-normal">
+              You and 32 others reacted to this post
+            </span>
+            {/* <div>
+              32 Reactions{" "}
+              <span className="text-gray-700 text-base">+ You</span>
+            </div>
+            <div>10 comments</div> */}
           </div>
         </div>
         <div className="px-4">
           <div className="w-full border-b border-gray-300 py-2 flex items-center justify-center gap-4 md:gap-6 lg:gap-8 flex-wrap">
-            <button className=" bg-gray-100 py-2.5 rounded-xl flex-1 flex items-center justify-center">
-              <AiFillLike className="text-2xl text-blue-800" />
+            <button className=" bg-gray-200 py-2.5 rounded-xl flex-1 flex items-center justify-center gap-1.5">
+              <AiOutlineLike className="text-2xl text-blue-800" />
+              <span className="text-md">1k</span>
             </button>
-            <button className=" bg-gray-100 py-2.5 rounded-xl flex-1 flex items-center justify-center">
-              <AiFillDislike className="text-2xl text-[#CD5C5C]" />
+            <button className=" bg-gray-200 py-2.5 rounded-xl flex-1 flex items-center justify-center gap-1.5">
+              <GoComment className="text-xl text-gray-800" />
+              <span className="text-md">3k</span>
             </button>
-            <button className=" bg-gray-100 py-2.5 rounded-xl flex-1 flex items-center justify-center">
-              <FaCommentAlt className="text-xl text-[#708090]" />
+            <button className=" bg-gray-200 py-2.5 rounded-xl flex-1 flex items-center justify-center gap-1.5">
+              <GrDislike className="text-xl text-gray-800" />
+              <span className="text-md">20</span>
             </button>
           </div>
         </div>
