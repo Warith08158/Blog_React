@@ -1,40 +1,97 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import DashboardInput from "./DashboardInput";
+import FormInput from "./FormInput";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../Firebase";
 
 const Blog = () => {
+  const [value, setValue] = useState({
+    Title: "",
+    category: "Category",
+    subCategory: "Subcategory",
+  });
+  const [categories, setCategories] = useState([]);
+  const categoryInputRef = useRef();
+  const subCategoryInputRef = useRef();
+  const blogTitle = useRef();
+
+  const { Title, category, subCategory } = value;
+
+  const fetchCategory = async () => {
+    if (categories.length > 0) {
+      return;
+    }
+    try {
+      const querySnapshot = await getDocs(collection(db, "Blog_Categories"));
+      const categoriesData = [];
+      querySnapshot.forEach((doc) => {
+        categoriesData.push(doc.data());
+      });
+      console.log(categoriesData);
+      // setCategories([...categoriesData]);
+      // setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchSubCategory = () => {};
+  const formSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
     <div>
       <h5 className="text-lg font-semibold text-gray-950 dark:text-white mt-3 mb-4">
         Create a Blog
       </h5>
-      <form className="">
+      <form className="" onSubmit={formSubmit}>
         <div className="flex-wrap flex gap-6">
-          <div>
-            <label
-              htmlFor="blog-title"
-              className="block text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Title
-            </label>
-            <input
+          <FormInput
+            type="text"
+            name="Title"
+            id="blogTitle"
+            placeholder="Title of blog"
+            title="Title"
+            reference={blogTitle}
+          />
+
+          <div className=" relative">
+            <FormInput
               type="text"
-              id="blog-title"
-              className="block mt-2 w-full p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="Title of blog"
+              name="Category"
+              id="Category"
+              placeholder="Choose category"
+              title="Category"
+              readOnly={true}
+              disabled={true}
+              reference={categoryInputRef}
+              value={category}
             />
+            <button
+              className="absolute inset-0 bg-transparent"
+              onClick={fetchCategory}
+              type="button"
+            ></button>
           </div>
 
-          <DashboardInput
-            htmlFor={"blog-category"}
-            title={"Category"}
-            id={"blog-Category"}
-          />
-
-          <DashboardInput
-            htmlFor={"blog-subCategory"}
-            title={"Subcategory"}
-            id={"blog-subCategory"}
-          />
+          <div className=" relative">
+            <FormInput
+              type="text"
+              name="Subcategory"
+              id="Subcategory"
+              placeholder="choose subcategory"
+              title="Subcategory"
+              readOnly={true}
+              disabled={true}
+              reference={subCategoryInputRef}
+              value={subCategory}
+            />
+            <button
+              className="absolute inset-0 bg-transparent"
+              onClick={fetchSubCategory}
+              type="button"
+            ></button>
+          </div>
         </div>
 
         <p className="ms-auto text-xs text-gray-500 dark:text-gray-400 mt-3">

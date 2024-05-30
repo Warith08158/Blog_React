@@ -1,6 +1,16 @@
 import React from "react";
 
-const FormInput = ({ type, name, id, placeholder, title, reference }) => {
+const FormInput = ({
+  type,
+  name,
+  id,
+  placeholder,
+  title,
+  reference,
+  disabled = false,
+  readOnly = false,
+  value,
+}) => {
   return (
     <div>
       <label
@@ -17,6 +27,9 @@ const FormInput = ({ type, name, id, placeholder, title, reference }) => {
         id={id}
         placeholder={placeholder}
         ref={reference}
+        disabled={disabled}
+        readOnly={readOnly}
+        value={value}
       />
     </div>
   );
