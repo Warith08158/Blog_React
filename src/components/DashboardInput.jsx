@@ -11,18 +11,6 @@ const DashboardInput = ({ htmlFor, title, id }) => {
     useState("Choose subcategory");
   const [subCategory, setSubCategory] = useState([]);
 
-  useEffect(() => {
-    const handleClick = () => {
-      setOpenMenu(false);
-    };
-
-    document.addEventListener("click", handleClick);
-
-    return () => {
-      document.removeEventListener("click", handleClick);
-    };
-  }, []);
-
   const handleButtonClick = async (event) => {
     event.stopPropagation();
     setOpenMenu(true);

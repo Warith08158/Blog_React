@@ -1,43 +1,85 @@
-import React, { useRef, useState } from "react";
-import DashboardInput from "./DashboardInput";
+import React, { useEffect, useRef, useState } from "react";
 import FormInput from "./FormInput";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../Firebase";
+import InputSkeleton from "../skeletonLoader/InputSkeleton";
+import MenuListItem from "./MenuListItem";
 
 const Blog = () => {
   const [value, setValue] = useState({
-    Title: "",
-    category: "Category",
-    subCategory: "Subcategory",
+    category: "Choose category",
+    subCategory: "Choose subcategory",
   });
   const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
+  const [newCategory, setNewCategory] = useState(null);
+  const [showMenu, setShowMenu] = useState({
+    categoryMenu: false,
+    subCategoryMenu: false,
+  });
+  const [isLoading, setIsLoading] = useState(true);
   const categoryInputRef = useRef();
   const subCategoryInputRef = useRef();
   const blogTitle = useRef();
 
-  const { Title, category, subCategory } = value;
+  const { category, subCategory } = value;
+  const { categoryMenu, subCategoryMenu } = showMenu;
 
-  const fetchCategory = async () => {
+  useEffect(() => {
+    const handleClick = () => {
+      setShowMenu({ categoryMenu: false, subCategoryMenu: false });
+    };
+
+    document.addEventListener("click", handleClick);
+
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, []);
+
+  const fetchCategory = async (event) => {
+    event.stopPropagation();
+    setShowMenu({ ...showMenu, categoryMenu: true });
     if (categories.length > 0) {
+      setIsLoading(false);
       return;
     }
+    setIsLoading(true);
     try {
       const querySnapshot = await getDocs(collection(db, "Blog_Categories"));
       const categoriesData = [];
       querySnapshot.forEach((doc) => {
         categoriesData.push(doc.data());
       });
-      console.log(categoriesData);
-      // setCategories([...categoriesData]);
-      // setIsLoading(false);
+      setCategories([...categoriesData]);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const fetchSubCategory = () => {};
+  const fetchSubCategory = (event) => {
+    event.stopPropagation();
+    setShowMenu({ ...showMenu, subCategoryMenu: true });
+    const matchingSubCategories = categories.find(
+      (eachCategory) => eachCategory.category === newCategory
+    );
+    setSubCategories([...matchingSubCategories.subCategories]);
+  };
   const formSubmit = (e) => {
     e.preventDefault();
+  };
+
+  const handleCategoryOnClick = (category) => {
+    if (newCategory === category) {
+      return;
+    }
+    setValue({ category: category, subCategory: "Choose subcategory" });
+    setNewCategory(category);
+  };
+
+  const handleSubCategoryOnClick = (subCategory) => {
+    setValue({ ...value, subCategory: subCategory });
   };
   return (
     <div>
@@ -55,7 +97,7 @@ const Blog = () => {
             reference={blogTitle}
           />
 
-          <div className=" relative">
+          <div className="relative">
             <FormInput
               type="text"
               name="Category"
@@ -72,9 +114,23 @@ const Blog = () => {
               onClick={fetchCategory}
               type="button"
             ></button>
+            {isLoading && categoryMenu && <InputSkeleton />}
+            {!isLoading && categoryMenu && (
+              <div className="absolute z-10 right-0 text-left left-0 bg-white divide-gray-100 rounded-lg shadow space-y-2 py-3 ">
+                {categories.map((category) =>
+                  newCategory === category.category ? null : (
+                    <div
+                      key={category.category}
+                      onClick={() => handleCategoryOnClick(category.category)}
+                    >
+                      <MenuListItem text={category.category} />
+                    </div>
+                  )
+                )}
+              </div>
+            )}
           </div>
-
-          <div className=" relative">
+          <div className="relative">
             <FormInput
               type="text"
               name="Subcategory"
@@ -91,6 +147,18 @@ const Blog = () => {
               onClick={fetchSubCategory}
               type="button"
             ></button>
+            {setSubCategories.length > 0 && newCategory && subCategoryMenu && (
+              <div className="absolute z-10 right-0 text-left left-0 bg-white divide-gray-100 rounded-lg shadow space-y-2 py-3 ">
+                {subCategories.map((subCategory) => (
+                  <div
+                    key={subCategory}
+                    onClick={() => handleSubCategoryOnClick(subCategory)}
+                  >
+                    <MenuListItem text={subCategory} />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
