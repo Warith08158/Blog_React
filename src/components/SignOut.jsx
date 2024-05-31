@@ -4,7 +4,7 @@ import { auth } from "../../Firebase";
 import useUserStatus from "../Hooks/useUserStatus";
 import Modal from "./Modal";
 
-const SignOut = ({ openMenu, setOpenMenu }) => {
+const SignOut = () => {
   const userIsLoggedin = useUserStatus().userIsVerified;
   const [userSignOut, setUserSignOut] = useState(false);
 
@@ -19,14 +19,14 @@ const SignOut = ({ openMenu, setOpenMenu }) => {
     // }
   };
 
-  return userIsLoggedin ? (
+  return (
     <div>
       <button
         onClick={signUserOut}
-        className="flex items-center p-2 w-full text-left text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+        className="flex items-center p-2 w-full text-left text-gray-900 rounded-lg dark:text-white"
       >
         <svg
-          className="flex-shrink-0 w-5 h-5 rotate-180 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+          className="flex-shrink-0 w-5 h-5 rotate-180 text-gray-500 transition duration-75 dark:text-gray-400"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -43,7 +43,7 @@ const SignOut = ({ openMenu, setOpenMenu }) => {
         <span className="flex-1 ms-3 whitespace-nowrap">Sign Out</span>
       </button>
     </div>
-  ) : null;
+  );
 };
 
 export default SignOut;

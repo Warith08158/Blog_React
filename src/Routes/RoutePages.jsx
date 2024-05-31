@@ -14,6 +14,12 @@ const SignUp = lazy(() => import("../pages/signUp/SignUp"));
 const UserDashboard = lazy(() =>
   import("../pages/userDashboard/UserDashboard")
 );
+const Notifications = lazy(() =>
+  import("../pages/notifications/Notifications")
+);
+
+const Users = lazy(() => import("../pages/users/Users"));
+const ReadBlog = lazy(() => import("../pages/readBlog/ReadBlog"));
 
 const RoutePages = () => {
   return (
@@ -34,6 +40,52 @@ const RoutePages = () => {
               </Suspense>
             }
           />
+
+          <Route
+            path="notifications"
+            element={
+              <Suspense
+                fallback={
+                  <div className="fixed inset-0 flex items-center justify-center">
+                    <Spinner />
+                  </div>
+                }
+              >
+                <Notifications />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path="read-blog/:id"
+            element={
+              <Suspense
+                fallback={
+                  <div className="fixed inset-0 flex items-center justify-center">
+                    <Spinner />
+                  </div>
+                }
+              >
+                <ReadBlog />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path="users"
+            element={
+              <Suspense
+                fallback={
+                  <div className="fixed inset-0 flex items-center justify-center">
+                    <Spinner />
+                  </div>
+                }
+              >
+                <Users />
+              </Suspense>
+            }
+          />
+
           <Route
             path="sign-in"
             element={

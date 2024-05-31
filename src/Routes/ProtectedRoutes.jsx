@@ -3,9 +3,9 @@ import { Navigate, Outlet } from "react-router-dom";
 import useUserStatus from "../Hooks/useUserStatus";
 
 const ProtectedRoutes = () => {
-  const userIsLoggedin = useUserStatus().userIsVerified;
+  const { userIsLoggedin, isLoading } = useUserStatus().userIsVerified;
   // userIsLoggedin ?
-  // : <Navigate to={"/sign-in"} />;
+  // : <Navigate to={"/sign-in"} />
   return <Outlet />;
 };
 

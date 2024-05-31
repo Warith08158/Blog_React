@@ -69,11 +69,6 @@ const Posts = () => {
             <span className="text-base text-gray-600 font-normal">
               You and 32 others reacted to this post
             </span>
-            {/* <div>
-              32 Reactions{" "}
-              <span className="text-gray-700 text-base">+ You</span>
-            </div>
-            <div>10 comments</div> */}
           </div>
         </div>
         <div className="px-4">
