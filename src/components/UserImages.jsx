@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const UserImages = () => {
+const UserImages = ({ name, email }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingImage, setIsLoadingImage] = useState(true);
 
@@ -38,10 +38,10 @@ const UserImages = () => {
         </div>
         <div className="flex items-center flex-col gap-2">
           <p className="text-white dark:text-gray-400 font-semibold text-xl tracking-wider">
-            Milan Jack
+            {name}
           </p>
           <p className="text-white dark:text-gray-400 text-md tracking-wide">
-            UI/UX Designer
+            {email}
           </p>
           <div className="flex items-center gap-8 lg:gap-12 mt-6">
             <div className="flex flex-col items-center gap-1">

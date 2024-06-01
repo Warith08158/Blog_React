@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Profile from "../../components/Profile";
 import Posts from "../../components/Posts";
 import Blog from "../../components/Blog";
 import { LuDot } from "react-icons/lu";
 import UserImages from "../../components/UserImages";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth, db } from "../../../Firebase";
+import { useNavigate } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
 
 const Management = [
   {
@@ -61,6 +65,65 @@ const Management = [
 
 const UserDashboard = () => {
   const [currentManagement, setCurrrentManagement] = useState("Profile");
+  const [isLoading, setIsLoading] = useState(true);
+  const [userDetails, setUserDetails] = useState({
+    name: "",
+    email: "",
+    createdAt: "",
+  });
+  const navigate = useNavigate();
+
+  const { name, email, createdAt } = userDetails;
+  useEffect(() => {
+    const getVerifiedUser = async (uid) => {
+      const docRef = doc(db, "users", uid);
+      const docSnap = await getDoc(docRef);
+      setUserDetails({
+        name: docSnap.data().name,
+        email: docSnap.data().email,
+        createdAt: docSnap.data().createdAt,
+      });
+      setIsLoading(false);
+    };
+
+    onAuthStateChanged(auth, (user) => {
+      if (user.emailVerified) {
+        const uid = user.uid;
+        getVerifiedUser(uid);
+        return;
+      } else {
+        navigate("/sign-in");
+      }
+    });
+  }, []);
+
+  if (isLoading) {
+    return (
+      <section className="px-3 sm:px-10 py-3">
+        <div className="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-[60%] max-w-48"></div>
+        <div className="mt-2 h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-[90%] max-w-56"></div>
+        <div
+          role="status"
+          className="flex mt-10 items-center justify-center h-80 w-full bg-gray-300 rounded-lg animate-pulse dark:bg-gray-700"
+        >
+          <svg
+            className="w-10 h-10 text-gray-200 dark:text-gray-600"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 16 20"
+          >
+            <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z" />
+            <path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM9 13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2Zm4 .382a1 1 0 0 1-1.447.894L10 13v-2l1.553-1.276a1 1 0 0 1 1.447.894v2.764Z" />
+          </svg>
+          <span className="sr-only">Loading...</span>
+        </div>
+        <div className="py-4 text-gray-500 list-none list-inside mb-6">
+          <div className="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-[60%] max-w-48"></div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="px-3 sm:px-10 py-3">
@@ -72,33 +135,29 @@ const UserDashboard = () => {
         <LuDot />
         <p className="text-gray-400 dark:text-gray-400">User</p>
         <LuDot />
-        <p className="text-gray-700 dark:text-gray-400 font-semibold">
-          Milan Jack
-        </p>
+        <p className="text-gray-700 dark:text-gray-400 font-semibold">{name}</p>
       </div>
-      <UserImages />
-      <div className="py-4 text-gray-500 list-none list-inside mb-6">
-        <ul className="flex gap-10 flex-wrap">
-          {Management.map((manage) => (
-            <li
-              key={manage.name}
-              onClick={() =>
-                currentManagement === manage.name
-                  ? null
-                  : setCurrrentManagement(manage.name)
-              }
-              className={`flex items-center gap-1 cursor-pointer ${
-                currentManagement === manage.name
-                  ? "text-primary-600"
-                  : "text-gray-600"
-              } font-semibold tracking-wider text-sm`}
-            >
-              {manage.svg}
-              {manage.name}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <UserImages name={name} email={email} />
+      <ul className="flex gap-10 flex-wrap py-4 text-gray-500 list-none list-inside mb-6">
+        {Management.map((manage) => (
+          <li
+            key={manage.name}
+            onClick={() =>
+              currentManagement === manage.name
+                ? null
+                : setCurrrentManagement(manage.name)
+            }
+            className={`flex items-center gap-1 cursor-pointer ${
+              currentManagement === manage.name
+                ? "text-primary-600"
+                : "text-gray-600"
+            } font-semibold tracking-wider text-sm`}
+          >
+            {manage.svg}
+            {manage.name}
+          </li>
+        ))}
+      </ul>
 
       {currentManagement === "Profile" && <Profile />}
       {currentManagement === "Posts" && <Posts />}

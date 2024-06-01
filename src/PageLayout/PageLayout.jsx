@@ -1,8 +1,7 @@
 import React from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { Navbar, Menu } from "../components/component";
 const PageLayout = () => {
-  const location = useLocation().pathname;
   return (
     <>
       <Navbar />

@@ -9,7 +9,6 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import ErrorAlert from "../../components/ErrorAlert";
-import useUserStatus from "../../Hooks/useUserStatus";
 
 const SignIn = () => {
   const emailRef = useRef(null);
@@ -17,7 +16,6 @@ const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
-  const userIsLoggedin = useUserStatus().userIsVerified;
 
   const onSubmit = async (e) => {
     e.preventDefault();

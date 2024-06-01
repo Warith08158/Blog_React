@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import FormInput from "./FormInput";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../Firebase";
-import InputSkeleton from "../skeletonLoader/InputSkeleton";
 import MenuListItem from "./MenuListItem";
+import InputSkeleton from "../../skeletonLoader/InputSkeleton";
 
 const Blog = () => {
   const [value, setValue] = useState({

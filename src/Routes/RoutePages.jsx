@@ -1,8 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Spinner from "../components/Spinner";
-import { ConfirmAccount } from "../components/component";
-import ProtectedRoutes from "./ProtectedRoutes";
 import PageLayout from "../PageLayout/PageLayout";
 
 const Home = lazy(() => import("../pages/Home/Home"));
@@ -20,6 +18,9 @@ const Notifications = lazy(() =>
 
 const Users = lazy(() => import("../pages/users/Users"));
 const ReadBlog = lazy(() => import("../pages/readBlog/ReadBlog"));
+const ConfirmAccount = lazy(() =>
+  import("../pages/confirmAccount/ConfirmAccount")
+);
 
 const RoutePages = () => {
   return (
@@ -129,7 +130,7 @@ const RoutePages = () => {
             }
           />
           <Route
-            path="protected-route"
+            path="user-dashboard"
             element={
               <Suspense
                 fallback={
@@ -138,25 +139,11 @@ const RoutePages = () => {
                   </div>
                 }
               >
-                <ProtectedRoutes />
+                <UserDashboard />
               </Suspense>
             }
-          >
-            <Route
-              path="user-dashboard"
-              element={
-                <Suspense
-                  fallback={
-                    <div className="fixed inset-0 flex items-center justify-center">
-                      <Spinner />
-                    </div>
-                  }
-                >
-                  <UserDashboard />
-                </Suspense>
-              }
-            />
-          </Route>
+          />
+
           <Route
             path="confirm-account"
             element={

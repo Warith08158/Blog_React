@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   ErrorAlert,
   FormInput,
@@ -12,8 +12,6 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
-import { v4 as uuidv4 } from "uuid";
-import useUserStatus from "../../Hooks/useUserStatus";
 
 const SignUp = () => {
   const [error, setError] = useState(false);
@@ -23,7 +21,6 @@ const SignUp = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const confirmPasswordRef = useRef(null);
-  const userIsLoggedin = useUserStatus().userIsVerified;
 
   const onSubmit = async (e) => {
     e.preventDefault();

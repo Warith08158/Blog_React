@@ -18,13 +18,13 @@ const Menu = ({ openMenu, setOpenMenu }) => {
         <ul className="space-y-2 font-medium">
           <li
             className={`${
-              location === "/protected-route/user-dashboard"
+              location === "/user-dashboard"
                 ? "bg-gray-200 text-gray-900"
                 : "bg-transparent text-gray-800"
             } rounded-md`}
           >
             <Link
-              to="/protected-route/user-dashboard"
+              to="/user-dashboard"
               className={`flex items-center p-2 rounded-lg group `}
               onClick={() => (openMenu ? setOpenMenu(false) : null)}
             >
