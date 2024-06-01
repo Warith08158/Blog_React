@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const UserImages = ({ name, email }) => {
+const UserImages = ({ name, email, posts, comments }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingImage, setIsLoadingImage] = useState(true);
 
@@ -10,6 +10,7 @@ const UserImages = ({ name, email }) => {
   const onLoadImage = () => {
     setIsLoadingImage(false);
   };
+
   return (
     <figure className="mt-10 sm:mt-12 relative">
       <img
@@ -46,13 +47,13 @@ const UserImages = ({ name, email }) => {
           <div className="flex items-center gap-8 lg:gap-12 mt-6">
             <div className="flex flex-col items-center gap-1">
               <p className="text-2xl font-semibold tracking-wider text-white">
-                20
+                {posts}
               </p>
               <p className="text-gray-100 tracking-wider text-sm">Posts</p>
             </div>
             <div className="flex flex-col items-center gap-1">
               <p className="text-2xl font-semibold tracking-wider text-white">
-                300
+                {comments}
               </p>
               <p className="text-gray-100 tracking-wider text-sm">Comments</p>
             </div>

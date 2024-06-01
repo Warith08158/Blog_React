@@ -4,10 +4,7 @@ import Posts from "../../components/Posts";
 import Blog from "../../components/Blog";
 import { LuDot } from "react-icons/lu";
 import UserImages from "../../components/UserImages";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth, db } from "../../../Firebase";
-import { useNavigate } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
+import useUserStatus from "../../Hooks/useUserStatus";
 
 const Management = [
   {
@@ -65,37 +62,8 @@ const Management = [
 
 const UserDashboard = () => {
   const [currentManagement, setCurrrentManagement] = useState("Profile");
-  const [isLoading, setIsLoading] = useState(true);
-  const [userDetails, setUserDetails] = useState({
-    name: "",
-    email: "",
-    createdAt: "",
-  });
-  const navigate = useNavigate();
-
-  const { name, email, createdAt } = userDetails;
-  useEffect(() => {
-    const getVerifiedUser = async (uid) => {
-      const docRef = doc(db, "users", uid);
-      const docSnap = await getDoc(docRef);
-      setUserDetails({
-        name: docSnap.data().name,
-        email: docSnap.data().email,
-        createdAt: docSnap.data().createdAt,
-      });
-      setIsLoading(false);
-    };
-
-    onAuthStateChanged(auth, (user) => {
-      if (user.emailVerified) {
-        const uid = user.uid;
-        getVerifiedUser(uid);
-        return;
-      } else {
-        navigate("/sign-in");
-      }
-    });
-  }, []);
+  const [isLoading, userDetails] = useUserStatus();
+  const { name, email, createdAt, posts, comments } = userDetails;
 
   if (isLoading) {
     return (
@@ -135,9 +103,12 @@ const UserDashboard = () => {
         <LuDot />
         <p className="text-gray-400 dark:text-gray-400">User</p>
         <LuDot />
-        <p className="text-gray-700 dark:text-gray-400 font-semibold">{name}</p>
+        <p className="text-gray-600 dark:text-gray-400 font-semibold">{name}</p>
       </div>
-      <UserImages name={name} email={email} />
+      <p className="text-gray-600 dark:text-gray-400 mt-1 text-sm">
+        You created your account on {createdAt}
+      </p>
+      <UserImages name={name} email={email} posts={posts} comments={comments} />
       <ul className="flex gap-10 flex-wrap py-4 text-gray-500 list-none list-inside mb-6">
         {Management.map((manage) => (
           <li
