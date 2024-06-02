@@ -166,35 +166,13 @@ const UserImages = ({ name, email, posts, comments }) => {
       </div>
 
       <div>
-        {images.coverPhoto ? (
-          <img
-            onLoad={onLoadCoverImage}
-            className={`object-cover w-full max-w-full rounded-lg h-[330px] ${
-              isLoading ? "hidden" : ""
-            }`}
-            src={images.coverPhoto}
-            alt="cover image"
-          />
-        ) : (
-          <div
-            className={`object-cover w-full max-w-full rounded-lg h-[330px] ${
-              isLoading ? "hidden" : ""
-            }`}
-          >
-            <svg
-              className=" text-gray-300 w-full h-full object-contain"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </div>
-        )}
+        <img
+          onLoad={onLoadCoverImage}
+          className={`object-cover w-full max-w-full rounded-lg h-[330px] ${
+            isLoading ? "hidden" : ""
+          }`}
+          src={images.coverPhoto}
+        />
 
         {!loadingPercentage && (
           <label
@@ -219,35 +197,13 @@ const UserImages = ({ name, email, posts, comments }) => {
       <div className="absolute inset-0 bg-gradient-to-r rounded-lg from-black via-transparent/70 to-black opacity-90"></div>
       <div className="absolute top-6 left-0 right-0 flex items-center flex-col gap-6 justify-center">
         <div className="relative border-2 border-white rounded-full">
-          {images.avatar ? (
-            <img
-              onLoad={onLoadImage}
-              className={`w-28 h-28 rounded-full object-cover ${
-                isLoadingImage ? "hidden" : ""
-              }`}
-              src={images.avatar}
-              alt="image"
-            />
-          ) : (
-            <div
-              className={`w-28 h-28 rounded-full ${
-                isLoadingImage ? "hidden" : ""
-              }`}
-            >
-              <svg
-                className=" text-gray-200 w-full h-full object-contain"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </div>
-          )}
+          <img
+            onLoad={onLoadImage}
+            className={`w-28 h-28 rounded-full object-cover ${
+              isLoadingImage ? "hidden" : ""
+            }`}
+            src={images.avatar}
+          />
 
           {!loadingPercentage && (
             <label
