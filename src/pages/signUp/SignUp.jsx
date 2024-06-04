@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { FormInput, Google, Logo } from "../../components/component";
 import { Link, useNavigate } from "react-router-dom";
 import { createAccount } from "../../../Firebase";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const [creatingAccount, setCreatingAccount] = useState(false);
@@ -27,14 +28,16 @@ const SignUp = () => {
       password.length > 10 ||
       confirmPassword !== password
     )
-      return;
+      return toast.error(
+        "There was an error in the form, check requirement below"
+      );
     setCreatingAccount(true);
     try {
       await createAccount(userEmail, userName, password);
       navigate("/confirm-account");
       setCreatingAccount(false);
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
       setCreatingAccount(false);
     }
   };

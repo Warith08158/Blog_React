@@ -4,16 +4,22 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   getAuth,
+  onAuthStateChanged,
   sendEmailVerification,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
 import {
+  collection,
   doc,
   getDoc,
+  getDocs,
   getFirestore,
+  query,
   serverTimestamp,
   setDoc,
+  where,
 } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -100,5 +106,41 @@ export const continueWithGoogle = async () => {
     }
   } catch (error) {
     throw new Error(error);
+  }
+};
+
+//send verification email
+export const sendVerificationEmail = async () => {
+  try {
+    await sendEmailVerification(auth.currentUser);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+//retrive account
+export const retrieveAccount = async (email) => {
+  const q = query(collection(db, "users"), where("email", "==", email));
+  try {
+    const querySnapshot = await getDocs(q);
+
+    const matchEmail = [];
+    querySnapshot.forEach((doc) => {
+      matchEmail.push({
+        id: doc.id,
+        name: doc.data().name,
+        email: doc.data().email,
+      });
+    });
+
+    if (matchEmail.length > 0) {
+      await sendPasswordResetEmail(auth, email);
+      return;
+    } else {
+      throw Error("couldn't find your account");
+    }
+  } catch (error) {
+    console.log(error);
+    throw new Error();
   }
 };

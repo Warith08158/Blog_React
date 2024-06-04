@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { continueWithGoogle } from "../../Firebase";
 import { useNavigate } from "react-router-dom";
 import Spinner from "./Spinner";
+import { toast } from "react-toastify";
 
 const Google = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const Google = () => {
       navigate("/user-dashboard");
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
+      toast.error(error.message);
     }
   };
   return (

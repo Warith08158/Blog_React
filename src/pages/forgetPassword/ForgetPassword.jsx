@@ -1,52 +1,43 @@
 import React, { useRef, useState } from "react";
 import ErrorAlert from "../../components/ErrorAlert";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import FormInput from "../../components/FormInput";
 import Logo from "../../components/Logo";
-import { auth, db } from "../../../Firebase";
-import { sendPasswordResetEmail } from "firebase/auth";
+import { retrieveAccount } from "../../../Firebase";
 import SucessAlert from "../../components/SucessAlert";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import useUserStatus from "../../Hooks/useUserStatus";
+import { toast } from "react-toastify";
 
 const ForgetPassword = () => {
   const emailRef = useRef();
   const [retrieving, setRetrieving] = useState(false);
-  const [sucess, setSucess] = useState(false);
-  const [error, setError] = useState(false);
-  const userIsLoggedin = useUserStatus().userIsVerified;
 
   const onSubmit = async (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
+
+    //check if email is invalid
+    function isEmptyOrSpaces(str) {
+      return str.trim() === "";
+    }
+
+    if (
+      isEmptyOrSpaces(email) ||
+      !email.includes("@") ||
+      !email.includes(".")
+    ) {
+      toast.error("invalid email address");
+      return;
+    }
+
     setRetrieving(true);
-
-    const q = query(collection(db, "users"), where("email", "==", email));
+    // setError(error.code.substring(5));
     try {
-      const querySnapshot = await getDocs(q);
-
-      const matchEmail = [];
-      querySnapshot.forEach((doc) => {
-        matchEmail.push({
-          id: doc.id,
-          name: doc.data().name,
-          email: doc.data().email,
-        });
-      });
-
-      if (matchEmail.length > 0) {
-        await sendPasswordResetEmail(auth, email);
-        setRetrieving(false);
-        emailRef.current.value = "";
-        setSucess("Link Has been sent");
-        return;
-      } else {
-        setRetrieving(false);
-        setError("Could not find your account");
-      }
+      await retrieveAccount(email);
+      toast.success("Reset link sent");
+      setRetrieving(false);
     } catch (error) {
       setRetrieving(false);
-      setError(error.code.substring(5));
+      toast.error(error.message);
     }
   };
 
@@ -133,16 +124,6 @@ const ForgetPassword = () => {
             </form>
           </div>
         </div>
-        {sucess && (
-          <div className="fixed right-0 top-20 md:right-4">
-            <SucessAlert text={sucess} setSucess={setSucess} />
-          </div>
-        )}
-        {error && (
-          <div className="fixed right-0 top-20 md:right-4">
-            <ErrorAlert text={error} setError={setError} />
-          </div>
-        )}
       </div>
     </section>
   );

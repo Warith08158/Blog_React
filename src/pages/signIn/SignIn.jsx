@@ -1,15 +1,11 @@
 import React, { useRef, useState } from "react";
 import FormInput from "../../components/FormInput";
 import Google from "../../components/Google";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../components/Logo";
-import { auth, signIn } from "../../../Firebase";
-import {
-  sendEmailVerification,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import ErrorAlert from "../../components/ErrorAlert";
-import { FaBullseye } from "react-icons/fa";
+import { sendVerificationEmail, signIn } from "../../../Firebase";
+import { toast } from "react-toastify";
+import { useUserDetailsContext } from "../../context/UserDetailsProvider";
 
 const SignIn = () => {
   const emailRef = useRef(null);
@@ -23,14 +19,26 @@ const SignIn = () => {
     const password = passwordRef.current.value;
 
     setIsLoading(true);
-
     try {
       await signIn(userEmail, password);
       setIsLoading(false);
-      navigate("/protected-route/user-dashboard");
+      navigate("/user-dashboard");
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
       setIsLoading(false);
+      if (error.message === "Error: user is not verified") {
+        resendVerificationLink();
+      }
+    }
+
+    async function resendVerificationLink() {
+      try {
+        await sendVerificationEmail();
+        toast.success("Verification email sent");
+      } catch (error) {
+        console.log(error);
+        toast.error("an error occurred");
+      }
     }
   };
 
