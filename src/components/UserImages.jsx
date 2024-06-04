@@ -21,22 +21,21 @@ const UserImages = ({ name, email, posts, comments }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingImage, setIsLoadingImage] = useState(true);
   const [loadingPercentage, setLoadingPercentage] = useState(null);
-  const [images, setImages] = useState({ avatar: null, coverPhoto: null });
+  const [userDetails, setUserDetails] = useState(null);
 
   useEffect(() => {
     const unsub = onSnapshot(doc(db, "users", auth.currentUser.uid), (doc) => {
       // console.log(doc.data().avatar, doc.data().cover + "-" + photo);
       console.log(doc.data());
-      setImages({
-        coverPhoto: doc.data().coverPhoto ? doc.data().coverPhoto : null,
-        avatar: doc.data().avatar ? doc.data().avatar : null,
-      });
+      setUserDetails(doc.data());
     });
 
     return () => {
       unsub();
     };
   }, []);
+
+  console.log(userDetails);
 
   const onLoadCoverImage = () => {
     setIsLoading(false);
@@ -171,7 +170,7 @@ const UserImages = ({ name, email, posts, comments }) => {
           className={`object-cover w-full max-w-full rounded-lg h-[330px] ${
             isLoading ? "hidden" : ""
           }`}
-          src={images.coverPhoto}
+          src={userDetails?.coverPhoto}
         />
 
         {!loadingPercentage && (
@@ -202,7 +201,7 @@ const UserImages = ({ name, email, posts, comments }) => {
             className={`w-28 h-28 rounded-full object-cover ${
               isLoadingImage ? "hidden" : ""
             }`}
-            src={images.avatar}
+            src={userDetails?.avatar}
           />
 
           {!loadingPercentage && (

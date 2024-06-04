@@ -1,45 +1,21 @@
 import React, { useState } from "react";
-import { auth, db } from "../../Firebase";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import { continueWithGoogle } from "../../Firebase";
 import { useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 import Spinner from "./Spinner";
-import ErrorAlert from "./ErrorAlert";
 
 const Google = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const provider = new GoogleAuthProvider();
 
   const submitWithGoogle = async () => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
-      const result = await signInWithPopup(auth, provider);
-      const userId = result.user.uid;
-      const docRef = doc(db, "users", userId);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        navigate("/protected-route/user-dashboard");
-        setIsLoading(false);
-        return;
-      } else {
-        const data = {
-          name: result.user.displayName,
-          email: result.user.email,
-          createdAt: serverTimestamp(),
-        };
-
-        await setDoc(doc(db, "users", userId), data);
-        navigate("/protected-route/user-dashboard");
-        setIsLoading(false);
-      }
+      await continueWithGoogle();
+      setIsLoading(false);
+      navigate("/user-dashboard");
     } catch (error) {
       setIsLoading(false);
       console.log(error);
-      setError(error.code.substring(5));
     }
   };
   return (
@@ -69,11 +45,6 @@ const Google = () => {
           />
         </svg>
         Continue with Google
-        {error && (
-          <div className="fixed right-0 top-20 md:right-4">
-            <ErrorAlert text={error} setError={setError} />
-          </div>
-        )}
       </button>
     </div>
   );

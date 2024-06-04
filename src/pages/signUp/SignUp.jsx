@@ -1,20 +1,9 @@
 import React, { useRef, useState } from "react";
-import {
-  ErrorAlert,
-  FormInput,
-  Google,
-  Logo,
-} from "../../components/component";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { auth, db } from "../../../Firebase";
-import {
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-} from "firebase/auth";
-import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { FormInput, Google, Logo } from "../../components/component";
+import { Link, useNavigate } from "react-router-dom";
+import { createAccount } from "../../../Firebase";
 
 const SignUp = () => {
-  const [error, setError] = useState(false);
   const [creatingAccount, setCreatingAccount] = useState(false);
   const navigate = useNavigate();
   const userNameRef = useRef(null);
@@ -38,31 +27,15 @@ const SignUp = () => {
       password.length > 10 ||
       confirmPassword !== password
     )
-      return setError("There was an error in the form. See requirements below");
-    setError(false);
-
+      return;
     setCreatingAccount(true);
-    //upload user details to firebase
     try {
-      const user = await createUserWithEmailAndPassword(
-        auth,
-        userEmail,
-        password
-      );
-
-      const data = {
-        name: userName,
-        email: userEmail,
-        createdAt: serverTimestamp(),
-      };
-
-      await setDoc(doc(db, "users", user.user.uid), data);
-      await sendEmailVerification(auth.currentUser);
-      setCreatingAccount(false);
+      await createAccount(userEmail, userName, password);
       navigate("/confirm-account");
-    } catch (error) {
       setCreatingAccount(false);
-      setError(error.code.substring(5));
+    } catch (error) {
+      console.log(error);
+      setCreatingAccount(false);
     }
   };
 
@@ -187,11 +160,6 @@ const SignUp = () => {
             <li>Password must match</li>
           </ul>
         </div>
-        {error && (
-          <div className="fixed right-0 top-20 md:right-4">
-            <ErrorAlert text={error} setError={setError} />
-          </div>
-        )}
       </div>
     </section>
   );

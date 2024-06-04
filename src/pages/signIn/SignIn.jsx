@@ -3,18 +3,18 @@ import FormInput from "../../components/FormInput";
 import Google from "../../components/Google";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Logo from "../../components/Logo";
-import { auth } from "../../../Firebase";
+import { auth, signIn } from "../../../Firebase";
 import {
   sendEmailVerification,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import ErrorAlert from "../../components/ErrorAlert";
+import { FaBullseye } from "react-icons/fa";
 
 const SignIn = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const onSubmit = async (e) => {
@@ -23,25 +23,14 @@ const SignIn = () => {
     const password = passwordRef.current.value;
 
     setIsLoading(true);
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        userEmail,
-        password
-      );
 
-      if (userCredential.user.emailVerified) {
-        navigate("/protected-route/user-dashboard");
-        setIsLoading(false);
-        return;
-      } else {
-        setError("Please Verify Your Email and try again");
-        await sendEmailVerification(auth.currentUser);
-        setIsLoading(false);
-      }
-    } catch (error) {
+    try {
+      await signIn(userEmail, password);
       setIsLoading(false);
-      setError(error.code.substring(5));
+      navigate("/protected-route/user-dashboard");
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
     }
   };
 
@@ -136,11 +125,6 @@ const SignIn = () => {
             </form>
           </div>
         </div>
-        {error && (
-          <div className="fixed right-0 top-20 md:right-4">
-            <ErrorAlert text={error} setError={setError} />
-          </div>
-        )}
       </div>
     </section>
   );

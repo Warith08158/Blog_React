@@ -1,7 +1,20 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import {
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  getAuth,
+  sendEmailVerification,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
+import {
+  doc,
+  getDoc,
+  getFirestore,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -32,3 +45,60 @@ const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth();
 export const db = getFirestore(app);
+
+//create user with email and password
+export const createAccount = async (userEmail, userName, password) => {
+  try {
+    const user = await createUserWithEmailAndPassword(
+      auth,
+      userEmail,
+      password
+    );
+    if (!user) throw Error("Account not created");
+    const data = {
+      name: userName,
+      email: userEmail,
+      createdAt: serverTimestamp(),
+    };
+
+    await setDoc(doc(db, "users", user.user.uid), data);
+    await sendEmailVerification(auth.currentUser);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+//sign in with email and password
+export const signIn = async (userEmail, password) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      userEmail,
+      password
+    );
+    if (!userCredential.user.emailVerified) throw Error("user is not verified");
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+//continue with google
+const provider = new GoogleAuthProvider();
+export const continueWithGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const userId = result.user.uid;
+    const docRef = doc(db, "users", userId);
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
+      const data = {
+        name: result.user.displayName,
+        email: result.user.email,
+        createdAt: serverTimestamp(),
+      };
+      await setDoc(doc(db, "users", userId), data);
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+};
